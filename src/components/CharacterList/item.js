@@ -20,7 +20,7 @@ const MenuItem = ({ name, status, image, id, order,  onCharacherChange }) => {
     const props = useSpring({
         to: { opacity: 1, bottom: '0'  },
         from: { opacity: 0, bottom: '-100px', position: 'relative' },
-        delay: 180 * (order % 20)
+        delay: 100 * (order % 20)
     }) 
 
     return (
