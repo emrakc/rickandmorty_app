@@ -17,7 +17,7 @@ import background from "./img/bg.jpg";
 import MenuContextProvider from './Context/MenuContext'
 
 const client = new ApolloClient({
-  uri: process.env.GRAPHQL_URL,
+  uri: 'https://rickandmortyapi.com/graphql',
   cache: new InMemoryCache()
 });
 
