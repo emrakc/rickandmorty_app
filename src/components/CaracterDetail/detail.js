@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import EpisodesGrid from './episodeList'
+import EpisodesGrid from './episodeList/episodeList'
 import { useLocation, useHistory } from "react-router-dom";
 import { useMenuActionContext } from '../../Context/MenuContext';
 import spinner from '../../img/spinner.gif';
@@ -38,9 +38,6 @@ query ($id:ID!=1){
     }
 }  
 `;
-
-
-
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -73,11 +70,13 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-
 const CharcterDetail = ({ match }) => {
     const { id } = match.params;
-    const classes = useStyles();
     const { state } = useLocation();
+    if (!state || !id) {
+        history.push(`/`);
+    }
+    const classes = useStyles();
     const history = useHistory();
 
     const { setSelectedCharacterId } = useMenuActionContext();
@@ -91,10 +90,7 @@ const CharcterDetail = ({ match }) => {
     if (error) return (<p>error :(</p>)
     if (loading) return (<div className={classes.spinner}>   <img src={spinner} />   </div>)
 
-    if (!state) {
-        history.push(`/`);
-        return (null)
-    }
+
 
     const { character } = data;
     let episodes = [];
@@ -143,11 +139,11 @@ const CharcterDetail = ({ match }) => {
 
                             </Grid>
                             <Typography gutterBottom variant="h3"  >  {character.name}    </Typography>
-                            <Typography variant="body" component="p">  species :    {character.species}  </Typography>
-                            <Typography variant="body" component="p">  gender :    {character.gender}  </Typography>
-                            <Typography variant="body" component="p">  status :    {character.status}  </Typography>
-                            <Typography variant="body" component="p">  type :    {character.type}  </Typography>
-                            <Typography variant="body" component="p">  location :    {character.location.name}  </Typography>
+                            <Typography variant="body" component="p">{`species : ${character.species}`}  </Typography>
+                            <Typography variant="body" component="p">{`gender :  ${character.gender}`}   </Typography>
+                            <Typography variant="body" component="p">{`status : ${character.status}`}   </Typography>
+                            <Typography variant="body" component="p">{`type : ${character.type}`}   </Typography>
+                            <Typography variant="body" component="p">{`location :  ${character.location.name}`}   </Typography>
 
                         </CardContent>
                     </Card>

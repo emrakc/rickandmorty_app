@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`render correctly should resolve loading and data 1`] = `
+<p>
+  Loading...
+</p>
+`;
+
+exports[`render correctly should resolve loading and data 2`] = `
+<p>
+  Loading...
+</p>
+`;
+
+exports[`render correctly should resolve loading state 1`] = `
+<p>
+  Loading...
+</p>
+`;

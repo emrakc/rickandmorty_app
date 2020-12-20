@@ -8,8 +8,8 @@ import {
   Route,
   Link
 } from "react-router-dom";
-import CharacterDetail from './components/CaracterDetail'
-import CharacterListMenu from './components/CharacterList'
+import CharacterDetail from './components/CaracterDetail/detail'
+import CharacterListMenu from './components/CharacterList/list'
 
 import { makeStyles } from '@material-ui/core/styles';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
@@ -17,7 +17,7 @@ import background from "./img/bg.jpg";
 import MenuContextProvider from './Context/MenuContext'
 
 const client = new ApolloClient({
-  uri: 'https://rickandmortyapi.com/graphql',
+  uri: process.env.GRAPHQL_URL,
   cache: new InMemoryCache()
 });
 

@@ -7,7 +7,7 @@ import TableRow from '@material-ui/core/TableRow';
 import { gql, useQuery } from '@apollo/client';
 import Paper from '@material-ui/core/Paper';
 
-const GET_FIRST_FIVE_LOCATIONS = gql` 
+export const GET_FIRST_FIVE_LOCATIONS = gql` 
 query($ids: [ID!]=[] ) {
     episodesByIds(ids: $ids) {
         id
@@ -24,10 +24,9 @@ const EpisodesGrid = ({ list }) => {
         {
             variables: { ids: list }
         }
-    )
-    console.log(data)
+    ) 
+    if (loading) return (<p>Loading...</p>)
     if (error) return (<p>error :(</p>)
-    if (loading) return (<p>loding...(</p>)
     return (
         <TableContainer component={Paper}>
             <Table aria-label="table">
@@ -40,7 +39,7 @@ const EpisodesGrid = ({ list }) => {
                 </TableHead>
                 <TableBody>
                     {data.episodesByIds.map((row) => (
-                        <TableRow key={row.id}> 
+                        <TableRow role='data-row' key={row.id}> 
                             <TableCell align="right">{row.episode}</TableCell> 
                             <TableCell align="right">{row.name}</TableCell>
                             <TableCell align="right">{row.air_date}</TableCell>

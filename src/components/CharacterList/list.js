@@ -8,9 +8,9 @@ import Drawer from '@material-ui/core/Drawer';
 import InfiniteScroll from 'react-infinite-scroller';
 import { useHistory } from "react-router-dom";
 import { useMenuContext } from '../../Context/MenuContext';
-import MenuItem from './menuItem';
+import MenuItem from './item';
 
-const GET_CHARS_QUERY = gql`
+export const GET_CHRC_QUERY = gql`
 query AllCharacters($page: Int){
     characters(page: $page) {
       info {
@@ -34,9 +34,9 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
     },
 
-    drawer: { 
-        display:'flex',
-        flexShrink: 0, 
+    drawer: {
+        display: 'flex',
+        flexShrink: 0,
         whiteSpace: 'nowrap',
     },
     drawerOpen: {
@@ -62,17 +62,15 @@ const useStyles = makeStyles((theme) => ({
 
 const CharacterListMenu = () => {
     const { data, error, loading, fetchMore } = useQuery(
-        GET_CHARS_QUERY
+        GET_CHRC_QUERY
     )
-    const {selectedCharacterId} = useMenuContext();
+    const { selectedCharacterId } = useMenuContext();
     const [drawerStatus, setDrawerStatus] = useState(true);
-
     const classes = useStyles();
-    const history = useHistory(); 
+    const history = useHistory();
     const characters = data?.characters.results || [];
     const menuItemContainerRef = React.createRef(null);
-   
-
+ 
     useEffect(() => {
         if (selectedCharacterId)
             handleCharacterChange(selectedCharacterId)
@@ -100,7 +98,6 @@ const CharacterListMenu = () => {
         let findIndex = characters.findIndex(c => c.id == id);
         if (findIndex > 0)
             prevId = characters[findIndex - 1].id;
-        debugger;
         if (findIndex < characters.length)
             nextId = characters[findIndex + 1].id;
 
@@ -122,7 +119,7 @@ const CharacterListMenu = () => {
             if (scrTopPosition > selectedNode.offsetTop || scrBottomPosition < selectedNode.offsetTop) {
                 selectedNode.scrollIntoView(true)
             }
-        }  
+        }
     }
 
     const getNewCharacters = async () => {
@@ -135,12 +132,12 @@ const CharacterListMenu = () => {
             });
         }
     };
-
+    if (loading) return (<p>Loading...</p>)
     return (
         <>
             <Drawer
-                onMouseEnter={()=>{setDrawerStatus(true)}}
-                onMouseLeave={()=>{setDrawerStatus(false)}}
+                onMouseEnter={() => { setDrawerStatus(true) }}
+                onMouseLeave={() => { setDrawerStatus(false) }}
                 variant="permanent"
                 className={clsx(classes.drawer, {
                     [classes.drawerOpen]: drawerStatus,
@@ -154,7 +151,7 @@ const CharacterListMenu = () => {
                     }),
                 }}
             >
-                <InfiniteScroll
+                <InfiniteScroll 
                     pageStart={0}
                     ref={menuItemContainerRef}
                     style={{ position: 'relative' }}
@@ -163,9 +160,8 @@ const CharacterListMenu = () => {
                     loader={<div className="loader" key={0}>Loading ...</div>}
                     useWindow={false}
                 >
-                    {loading && <p style={{ direction: 'ltr' }}>Loading...</p>}
-                    {error && <p >!--Error--!</p>}
 
+                    {error && <p >!--Error--!</p>}
                     {
                         characters
                             ? characters.map((char, i) => (
