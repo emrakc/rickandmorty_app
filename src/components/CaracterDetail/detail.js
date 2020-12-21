@@ -114,25 +114,35 @@ const CharcterDetail = ({ match }) => {
                             image={character.image}
                         />
                         <CardContent style={{ width: '100%' }}>
-                            <Grid xs={12} spacing={1} alignItems='flex-end'>
-                                {state.prevId &&
-                                    <Button
-                                        color="primary"
-                                        onClick={() => { setSelectedCharacterId(state.prevId) }}
-                                    >
-                                        PREV CHARACTER
+                            <Grid xs={12} style={{ display: "flex", justifyContent: "space-between" }} spacing={1}  >
+                                <Grid xs={8} >
+                                    {state.prevId &&
+                                        <Button
+                                            color="primary"
+                                            onClick={() => { setSelectedCharacterId(state.prevId) }}
+                                        >
+                                            PREV CHARACTER
                                 </Button>
-                                }
-                                {state.nextId &&
-                                    <Button
-                                        variant='outlined'
-                                        color="secondary"
-                                        onClick={() => { setSelectedCharacterId(state.nextId) }}
-                                    >
-                                        NEXT CHARACTER
+                                    }
+                                    {state.nextId &&
+                                        <Button
+                                            variant='outlined'
+                                            color="secondary"
+                                            onClick={() => { setSelectedCharacterId(state.nextId) }}
+                                        >
+                                            NEXT CHARACTER
                                  </Button>
-                                }
-
+                                    }
+                                </Grid>
+                                <Grid xs={4} style={{ display: "flex", justifyContent: "flex-end" }}>
+                                    <Button
+                                        variant='text'
+                                        color="secondary"
+                                        onClick={() => { history.push(`/`); }}
+                                    >
+                                        CLOSE
+                                 </Button>
+                                </Grid>
                             </Grid>
                             <Grid spacing={1} style={{ display: "flex", flex: 1 }} alignContent='flex-start'>
                                 <Typography gutterBottom variant="h4"  >      #{character.id}       </Typography>
